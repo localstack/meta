@@ -1,0 +1,45 @@
+name: Sync Project Cards and Labels
+
+on:
+  workflow_call:
+    inputs:
+      categories:
+        description: 'Comma-separated list of categories of labels that should be synced.'
+        required: false
+        type: string
+        default: 'status'
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub personal access token with write access to the project
+
+jobs:
+  determine-categories:
+    # See https://github.com/orgs/community/discussions/11692
+    runs-on: ubuntu-latest
+    outputs:
+      categories: ${{ steps.split.outputs.categories_list }}
+    steps:
+      - name: Create an array of categories
+        id: split
+        run: echo "categories_list=$(jq 'split(",")' -Rc <(echo '${{ inputs.categories }}'))" >> $GITHUB_OUTPUT
+
+  sync-labels:
+    needs: determine-categories
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        category: ${{ fromJson(needs.determine-categories.outputs.categories) }}
+    steps:
+    - name: Download manifest
+      run: |
+        curl --fail -o labels-${{ matrix.category }}.yml -L https://api.github.com/repos/localstack/meta/contents/.github/labels-${{ matrix.category }}.yml -H 'Accept: application/vnd.github.v3.raw' -H "Authorization: token ${{ secrets.github-token }}"
+    - name: Show downloaded label manifest
+      run: cat labels-${{ matrix.category }}.yml
+    - name: Sync Labels
+      uses: micnncim/action-label-syncer@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.github-token }}
+      with:
+        manifest: labels-${{ matrix.category }}.yml
+        prune: false

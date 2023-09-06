@@ -1,0 +1,210 @@
+- color: ff9900
+  description: AWS Certificate Manager
+  name: aws:acm
+- color: ff9900
+  description: AWS Amplify
+  name: aws:amplify
+- color: ff9900
+  description: AWS APIGateway
+  name: aws:apigateway
+- color: ff9900
+  description: API Gateway Version 2
+  name: aws:apigatewayv2
+- color: ff9900
+  description: AWS AppConfig
+  name: aws:appconfig
+- color: ff9900
+  description: AWS Application Auto Scaling
+  name: aws:application-autoscaling
+- color: ff9900
+  description: AWS Appsync
+  name: aws:appsync
+- color: ff9900
+  description: Amazon Athena
+  name: aws:athena
+- color: ff9900
+  description: AWS Autoscaling
+  name: aws:autoscaling
+- color: ff9900
+  description: AWS Batch
+  name: aws:batch
+- color: ff9900
+  description: AWS CloudFormation
+  name: aws:cloudformation
+- color: ff9900
+  description: AWS CloudFront
+  name: aws:cloudfront
+- color: ff9900
+  description: AWS CloudSearch
+  name: aws:cloudsearch
+- color: ff9900
+  description: AWS CloudTrail
+  name: aws:cloudtrail
+- color: ff9900
+  description: AWS Cloudwatch
+  name: aws:cloudwatch
+- color: ff9900
+  description: AWS CodeCommit
+  name: aws:codecommit
+- color: ff9900
+  description: ""
+  name: aws:codepipeline
+- color: ff9900
+  description: AWS Congito
+  name: aws:cognito
+- color: ff9900
+  description: AWS Dynamodb
+  name: aws:dynamodb
+- color: ff9900
+  description: AWS Dynamodbstreams
+  name: aws:dynamodbstreams
+- color: ff9900
+  description: AWS Elastic Compute Cloud
+  name: aws:ec2
+- color: ff9900
+  description: AWS Elastic Container Registry
+  name: aws:ecr
+- color: ff9900
+  description: AWS Elastic Container Service
+  name: aws:ecs
+- color: ff9900
+  description: Amazon Elastic File System
+  name: aws:efs
+- color: ff9900
+  description: Amazon Elastic Kubernetes Service
+  name: aws:eks
+- color: ff9900
+  description: AWS ElastiCache
+  name: aws:elasticache
+- color: ff9900
+  description: ""
+  name: aws:elasticbeanstalk
+- color: ff9900
+  description: AWS Elasticsearch
+  name: aws:elasticsearch
+- color: ff9900
+  description: AWS Elastic Transcoder
+  name: aws:elastictranscoder
+- color: ff9900
+  description: AWS Elastic Load Balancer
+  name: aws:elb
+- color: ff9900
+  description: Amazon EMR
+  name: aws:emr
+- color: ff9900
+  description: AWS Elasticsearch
+  name: aws:es
+- color: ff9900
+  description: AWS EventBridge
+  name: aws:eventbridge
+- color: ff9900
+  description: AWS Fargate
+  name: aws:fargate
+- color: ff9900
+  description: AWS Firehose
+  name: aws:firehose
+- color: ff9900
+  description: Amazon S3 Glacier
+  name: aws:glacier
+- color: ff9900
+  description: AWS Glue
+  name: aws:glue
+- color: ff9900
+  description: AWS Identity and Access Management
+  name: aws:iam
+- color: ff9900
+  description: AWS IoT
+  name: aws:iot
+- color: ff9900
+  description: Amazon VPC IP Address Manager (IPAM)
+  name: aws:ipam
+- color: ff9900
+  description: AWS Kinesis
+  name: aws:kinesis
+- color: ff9900
+  description: AWS Key Management Service
+  name: aws:kms
+- color: ff9900
+  description: AWS Lambda
+  name: aws:lambda
+- color: ff9900
+  description: AWS Cloudwatch Logs
+  name: aws:logs
+- color: ff9900
+  description: Amazon Managed Streaming for Apache Kafka
+  name: aws:msk
+- color: ff9900
+  description: Amazon Managed Workflows for Apache Airflow
+  name: aws:mwaa
+- color: ff9900
+  description: AWS Neptune DB
+  name: aws:neptune
+- color: ff9900
+  description: AWS OpenSearch
+  name: aws:opensearch
+- color: ff9900
+  description: AWS Organizations
+  name: aws:organizations
+- color: ff9900
+  description: AWS Quantum Ledger Database
+  name: aws:qldb
+- color: ff9900
+  description: AWS Resource Access Manager
+  name: aws:ram
+- color: ff9900
+  description: AWS Relational Database Service
+  name: aws:rds
+- color: ff9900
+  description: AWS Redshift
+  name: aws:redshift
+- color: ff9900
+  description: AWS Resource Groups
+  name: aws:resourcegroups
+- color: ff9900
+  description: Amazon Route 53
+  name: aws:route53
+- color: ff9900
+  description: AWS Simple Storage Service
+  name: aws:s3
+- color: ff9900
+  description: Amazon SageMaker
+  name: aws:sagemaker
+- color: ff9900
+  description: AWS Secrets Manager
+  name: aws:secretsmanager
+- color: ff9900
+  description: AWS Service Discovery
+  name: aws:servicediscovery
+- color: ff9900
+  description: ""
+  name: aws:servicequotas
+- color: ff9900
+  description: AWS Simple Email Service
+  name: aws:ses
+- color: ff9900
+  description: AWS Simple Notification Service
+  name: aws:sns
+- color: ff9900
+  description: AWS Simple Queue Service
+  name: aws:sqs
+- color: ff9900
+  description: Amazon Systems Manager
+  name: aws:ssm
+- color: F0AE3E
+  description: ""
+  name: aws:sso-admin
+- color: ff9900
+  description: AWS Step Functions
+  name: aws:stepfunctions
+- color: ff9900
+  description: AWS Security Token Service
+  name: aws:sts
+- color: ff9900
+  description: AWS Timestream
+  name: aws:timestream
+- color: ff9900
+  description: Amazon Transcribe
+  name: aws:transcribe
+- color: ff9900
+  description: AWS Transfer Family
+  name: aws:transfer
