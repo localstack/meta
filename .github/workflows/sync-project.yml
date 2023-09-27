@@ -14,15 +14,18 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
+  add-to-project:
+    name: Add to project
+    uses: localstack/meta/.github/workflows/add-to-project.yml@main
+    with:
+      project_id: ${{ inputs.project_id }}
+    secrets:
+      github-token: ${{ secrets.github-token }}
+
   sync-project-card:
+    needs: add-to-project
     runs-on: ubuntu-latest
     steps:
-      - name: Add to project
-        uses: actions/add-to-project@v0.5.0
-        with:
-          project-url: https://github.com/orgs/localstack/projects/${{ inputs.project_id }}
-          github-token: ${{ secrets.github-token }}
-
       - name: Project status change necessary?
         uses: actions/github-script@v6
         id: determine-status

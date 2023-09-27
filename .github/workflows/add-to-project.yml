@@ -1,0 +1,24 @@
+name: Sync Project
+
+on:
+  workflow_call:
+    inputs:
+      project_id:
+        description: 'The ID of the project where the issues should be added and the status should be synced.'
+        required: false
+        type: string
+        default: '17'
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub personal access token with write access to the project
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add to project
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/localstack/projects/${{ inputs.project_id }}
+          github-token: ${{ secrets.github-token }}
