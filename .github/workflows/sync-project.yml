@@ -1,4 +1,4 @@
-name: Sync Project Cards and Labels
+name: Sync Project
 
 on:
   workflow_call:
