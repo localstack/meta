@@ -72,3 +72,59 @@ jobs:
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
+
+## pr-enforce-semver-labels
+```yaml
+name: Enforce SemVer Labels
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened, edited, synchronize]
+
+jobs:
+  enforce-semver-labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-semver-labels.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
+
+## pr-enforce-no-major
+```yaml
+name: Enforce no major on master
+
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened, edited, synchronize]
+    # only enforce for PRs targeting the master branch
+    branches:
+    - master
+
+jobs:
+  enforce-no-major:
+    permissions:
+      issues: write
+      pull-requests: write
+    uses: localstack/meta/.github/workflows/pr-enforce-no-major.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
+
+## pr-enforce-no-major-minor
+```yaml
+name: Enforce no major or minor on master
+
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened, edited, synchronize]
+    # only enforce for PRs targeting the master branch
+    branches:
+    - master
+
+jobs:
+  enforce-no-major-minor:
+    permissions:
+      issues: write
+      pull-requests: write
+    uses: localstack/meta/.github/workflows/pr-enforce-no-major-minor.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```

@@ -1,0 +1,25 @@
+name: Enforce PR labels present
+
+on:
+  workflow_call:
+    inputs:
+      labels:
+        required: true
+        type: string
+        description: "comma separated list of labels where exactly one has to be set on PRs"
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub token with access to the issues of the calling repo
+
+jobs:
+  # make sure _all_ PRs have a semver label
+  enforce-semver-label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: ${{ inputs.labels }}
+          token: ${{ secrets.github-token }}
