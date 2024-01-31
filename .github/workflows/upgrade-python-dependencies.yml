@@ -1,0 +1,37 @@
+name: Upgrade pinned Python dependencies
+
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub token with access to the issues of the calling repo
+
+jobs:
+  upgrade-dependencies:
+    name: Upgrade Pinned Python Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Upgrade all requirements files
+        run: make upgrade-all-reqs
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Upgrade pinned Python dependencies"
+          body: "This PR upgrades all the pinned Python dependencies."
+          branch: "upgrade-dependencies"
+          author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
+          committer: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
+          commit-message: "Upgrade pinned Python dependencies"
+          labels: "area: dependencies, semver: patch"
+          token: ${{ secrets.github-token }}
