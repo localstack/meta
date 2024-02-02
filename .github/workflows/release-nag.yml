@@ -1,0 +1,25 @@
+name: Nag for PR updates
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: Release version
+        required: false
+        type: string
+      command:
+        description: Command to run, either "no-milestone" to check PRs with no milestone, or "merge-near" to check the status of PRs with the target milestone
+        required: true
+        type: choice
+        options:
+          - no-milestone
+          - merge-near
+
+jobs:
+  nag:
+    name: Nag users for updates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the nag script
+        run: bash ./scripts/nag.sh ${{ inputs.command }} ${{ inputs.release-version }}
