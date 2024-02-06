@@ -21,8 +21,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Upgrade all requirements files
-        run: make upgrade-all-reqs
+      - name: Upgrade all pinned dependencies
+        run: make upgrade-pinned-dependencies
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v6
