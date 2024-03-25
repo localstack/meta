@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add to project
-        uses: actions/add-to-project@v0.6.0
+        uses: actions/add-to-project@v0.6.1
         with:
           project-url: https://github.com/orgs/localstack/projects/${{ inputs.project_id }}
           github-token: ${{ secrets.github-token }}
