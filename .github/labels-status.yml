@@ -1,30 +1,30 @@
 - color: C2FF99
-  description: The feature/enhancement request was accepted
+  description: Feature/enhancement request was accepted
   name: 'status: accepted'
 - color: D38C02
-  description: The issue has been triaged but not yet being worked on
+  description: Triaged but not yet being worked on
   name: 'status: backlog'
 - color: C2FF99
-  description: The bug report was confirmed
+  description: Bug report was confirmed
   name: 'status: confirmed'
 - color: F07333
-  description: An issue is currently being worked on
+  description: Currently being worked on
   name: 'status: in progress'
 - color: 0052CC
-  description: The issue is resolved by providing a fix/implementation
+  description: Resolved via a fix or an implementation
   name: 'status: resolved/fixed'
 - color: E5E5E5
   description: Closed due to staleness
   name: 'status: resolved/stale'
 - color: 0052CC
-  description: The issue is resolved by providing a workaround
+  description: Resolved by providing a workaround
   name: 'status: resolved/workaround'
 - color: FFF799
   description: Waiting for a response from the reporter
   name: 'status: response required'
 - color: E5E5E5
-  description: Will be closed soon due to staleness
+  description: To be closed soon due to staleness
   name: 'status: stale'
 - color: ffbb99
-  description: LocalStack maintainers need to evaluate this issue
+  description: Requires evaluation by maintainers
   name: 'status: triage needed'
