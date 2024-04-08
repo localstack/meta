@@ -1,11 +1,9 @@
 - color: A93226
-  description: PR containing breaking changes which can only be released in a major
-    release.
+  description: Breaking changes which can be included in a major release only
   name: 'semver: major'
 - color: E78F1F
-  description: Non-breaking feature PR which can be contained in minor releases, but
-    not in patch releases.
+  description: Non-breaking changes which can be included in minor releases, but not in patch releases
   name: 'semver: minor'
 - color: 2ECC71
-  description: Non-breaking bugfix PR which can be contained in patch releases
+  description: Non-breaking changes which can be included in patch releases
   name: 'semver: patch'
