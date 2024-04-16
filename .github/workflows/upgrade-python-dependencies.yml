@@ -21,6 +21,13 @@ jobs:
         with:
           python-version: "3.11"
 
+      # FIXME OS level dependencies differ between the projects, could be a workflow input
+      # libvirt-dev: localstack/localstack-ext
+      - name: Install OS packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvirt-dev
+
       - name: Upgrade all pinned dependencies
         run: make upgrade-pinned-dependencies
 
