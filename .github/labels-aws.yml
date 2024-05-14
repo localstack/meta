@@ -143,6 +143,9 @@
   description: AWS IoT Core
   name: aws:iot
 - color: ff9900
+  description: AWS IoT Device Shadow Service
+  name: aws:iot-data
+- color: ff9900
   description: AWS IoT Analytics
   name: aws:iotanalytics
 - color: ff9900
@@ -216,7 +219,10 @@
   name: aws:redshift
 - color: ff9900
   description: AWS Resource Groups
-  name: aws:resourcegroups
+  name: aws:resource-groups
+- color: ff9900
+  description: AWS Resource Groups Tagging
+  name: aws:resourcegroupstaggingapi
 - color: ff9900
   description: Amazon Route 53
   name: aws:route53
@@ -259,7 +265,7 @@
 - color: ff9900
   description: AWS Systems Manager
   name: aws:ssm
-- color: F0AE3E
+- color: ff9900
   description: AWS IAM Identity Centre
   name: aws:sso-admin
 - color: ff9900
@@ -286,6 +292,9 @@
 - color: ff9900
   description: AWS Transfer Family
   name: aws:transfer
+- color: ff9900
+  description: Amazon Verified Permissions
+  name: aws:verifiedpermissions
 - color: ff9900
   description: AWS Web Application Firewall
   name: aws:wafv2

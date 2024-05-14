@@ -11,13 +11,13 @@
   description: Currently being worked on
   name: 'status: in progress'
 - color: 0052CC
-  description: Resolved via a fix or an implementation
+  description: Resolved with a fix or an implementation
   name: 'status: resolved/fixed'
 - color: E5E5E5
   description: Closed due to staleness
   name: 'status: resolved/stale'
 - color: 0052CC
-  description: Resolved by providing a workaround
+  description: Resolved with a workaround
   name: 'status: resolved/workaround'
 - color: FFF799
   description: Waiting for a response from the reporter
