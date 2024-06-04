@@ -1,0 +1,35 @@
+name: LocalStack - Validate Codeowners
+
+on:
+  workflow_call:
+    inputs:
+      codeowners-file:
+        required: false
+        type: string
+        description: "path to the codeowners file"
+        default: ".github/CODEOWNERS"
+
+
+jobs:
+  validate-codeowners:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install npm
+        uses: actions/setup-node@v4
+
+      - name: Install snyk codeowners validator
+        run: |
+          npm i -g github-codeowners
+
+      - name: Run snyk validate command
+        run: |
+          RESULT=$(github-codeowners validate -c ${{ inputs.codeowners-file }} 2>&1)
+          if [ -n "$RESULT" ]; then
+            echo "$RESULT"
+            exit 1
+          else
+            echo "Codeowners file is valid"
+          fi

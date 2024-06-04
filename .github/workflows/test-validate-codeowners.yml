@@ -1,0 +1,27 @@
+name: LocalStack SaaS Meta - Test Codeowners Validation Action
+
+on:
+  push:
+    paths:
+      - ".github/workflows/codeowner_files/*"
+      - ".github/workflows/validate-codeowners.yml"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - ".github/workflows/codeowner_files/*"
+      - ".github/workflows/validate-codeowners.yml"
+    branches:
+      - main
+
+jobs:
+  check-if-action-fails-with-wrong-codeowners-file:
+    uses: ./.github/workflows/validate-codeowners.yml
+    with: 
+      codeowners-file: './.github/workflows/codeowner_files/WRONG_CODEOWNERS'
+
+    
+  check-if-action-succeeds-with-correct-codeowners-file:
+    uses: ./.github/workflows/validate-codeowners.yml
+    with: 
+      codeowners-file: './.github/workflows/codeowner_files/CORRECT_CODEOWNERS'
