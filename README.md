@@ -172,3 +172,25 @@ jobs:
           labels: "area: dependencies, semver: patch"
           token: ${{ secrets.github-token }}
 ```
+
+## validate-codeowners
+
+This workflow can be used to validate whether the codeowners file is still valid
+
+```yaml
+name: LocalStack - Validate Codeowners
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-codeowners:
+    uses: localstack/meta/.github/workflows/validate-codeowners.yml@main
+    with:
+      codeowners-file: './CODEOWNERS'
+```
