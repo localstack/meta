@@ -32,7 +32,7 @@ jobs:
         run: make upgrade-pinned-dependencies
 
       - name: Create PR
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           title: "Upgrade pinned Python dependencies"
           body: "This PR upgrades all the pinned Python dependencies."
