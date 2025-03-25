@@ -1,0 +1,45 @@
+name: Check feature catalog files
+
+on:
+  workflow_call:
+    inputs:
+      pr_number:
+        description: 'PR number cannot be automatically detected in this event type and must be provided manually'
+        required: true
+
+jobs:
+  check_file_update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get List of changed service files
+        id: changed-files
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+        run: |
+          ALL_CHANGED_FILES=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/files" | jq -r '.[].filename' | paste -sd, -)
+          echo "all_changed_files=$ALL_CHANGED_FILES" >> $GITHUB_OUTPUT
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install pyyaml jsonschema
+
+      - name: Check YAML file schema
+        env:
+          ALL_CHANGED_FILES: "${{ steps.changed-files.outputs.all_changed_files }}"
+          FEATURES_JSON_SCHEMA: "features_schema.json"
+        run: python3 .github/scripts/check_features_files.py
+
+
