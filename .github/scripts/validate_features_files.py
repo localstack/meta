@@ -52,7 +52,6 @@ def main():
 
     # validate schemas
     for file_path in changed_features_files:
-        print(file_path)
         features_file = load_yaml_file(file_path)
         validate_yaml_against_schema(features_file, features_schema)
 
