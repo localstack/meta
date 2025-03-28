@@ -9,7 +9,7 @@ on:
         required: false
       localstack_meta_ref:
         description: 'To manually launch this workflow, provide branch to checkout in the localstack/meta'
-        type: number
+        type: string
         required: false
 
 jobs:
