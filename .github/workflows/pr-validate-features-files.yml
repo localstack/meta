@@ -39,7 +39,7 @@ jobs:
       - name: Fetch list of modified files in the PR
         id: changed-files
         env:
-          PR_NUMBER: ${{ pull_request.number || inputs.pr_number }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
         run: |
           ALL_CHANGED_FILES=$(curl -s -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/files" | jq -r '.[].filename' | paste -sd, -)
