@@ -3,6 +3,10 @@ name: Validate feature catalog files
 on:
   workflow_call:
     inputs:
+      aws_services_path:
+        description: 'Path to the folder with aws services in localstack repository'
+        type: string
+        required: true
       pr_number:
         description: 'To manually launch this workflow, provide the PR number'
         type: number
@@ -50,6 +54,12 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install pyyaml jsonschema
+
+      - name: Check features files exist
+        env:
+          ALL_CHANGED_FILES: "${{ steps.changed-files.outputs.all_changed_files }}"
+          SERVICES_PATH: "${{ github.event.inputs.aws_services_path }}"
+        run: python3 localstack-meta/.github/scripts/check_features_files_exist.py
 
       - name: Validate features files
         env:
