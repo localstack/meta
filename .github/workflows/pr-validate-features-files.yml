@@ -4,15 +4,15 @@ on:
   workflow_call:
     inputs:
       aws_services_path:
-        description: 'Path to the folder with aws services in localstack repository'
+        description: 'Directory containing AWS service implementations in the localstack repository'
         type: string
         required: true
       pr_number:
-        description: 'To manually launch this workflow, provide the PR number'
-        type: number
+        description: 'Pull request number for workflow execution'
+        type: string
         required: false
       localstack_meta_ref:
-        description: 'To manually launch this workflow, provide branch to checkout in the localstack/meta'
+        description: 'Branch to checkout in the localstack/meta repository without "origin/" prefix'
         type: string
         required: false
 
