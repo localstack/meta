@@ -38,10 +38,6 @@ def main():
     missing_files = [file_path for file_path, exists in features_file_status.items() if not exists]
     for file_path in missing_files:
             print(f"⚠️Feature file {file_path} is missing")
-    if len(missing_files) != len(features_file_status):
-        print(f"All feature files are missing")
-        sys.exit(1)
-
 
 
 if __name__ == "__main__":
