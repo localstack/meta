@@ -33,13 +33,13 @@ jobs:
           sparse-checkout: |
             .github/scripts
             .github/features_schema.json
-          ref: ${{ github.event.inputs.localstack_meta_ref || 'main' }}
+          ref: ${{ inputs.localstack_meta_ref || 'main' }}
           path: 'localstack-meta'
 
       - name: Fetch list of modified files in the PR
         id: changed-files
         env:
-          PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+          PR_NUMBER: ${{ pull_request.number || inputs.pr_number }}
         run: |
           ALL_CHANGED_FILES=$(curl -s -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/files" | jq -r '.[].filename' | paste -sd, -)
@@ -58,7 +58,7 @@ jobs:
       - name: Check features files exist
         env:
           ALL_CHANGED_FILES: "${{ steps.changed-files.outputs.all_changed_files }}"
-          SERVICES_PATH: "${{ github.event.inputs.aws_services_path }}"
+          SERVICES_PATH: "${{ inputs.aws_services_path }}"
         run: python3 localstack-meta/.github/scripts/check_features_files_exist.py
 
       - name: Validate features files
