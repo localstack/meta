@@ -1,4 +1,5 @@
 import os
+import sys
 
 FEATURES_FILE_NAME='features.yml'
 
@@ -13,8 +14,8 @@ def find_paths_to_service_providers(directory: str) -> list[str]:
     return paths
 
 
-def check_provider_and_features(services_path, changed_files) -> dict[str, bool]:
-    features_file_exists = {}
+def map_features_files_status(services_path, changed_files) -> dict[str, bool]:
+    missing_features_file_status = {}
     for file_path in changed_files:
         if file_path.startswith(services_path):
             service_folder_name = file_path.removeprefix(services_path).split('/')[1]
@@ -23,8 +24,8 @@ def check_provider_and_features(services_path, changed_files) -> dict[str, bool]
             provider_files = find_paths_to_service_providers(service_path)
             for provider_file in provider_files:
                 features_file = os.path.join(os.path.dirname(provider_file), FEATURES_FILE_NAME)
-                features_file_exists[features_file] = os.path.exists(features_file)
-    return features_file_exists
+                missing_features_file_status[features_file] = os.path.exists(features_file)
+    return missing_features_file_status
 
 def main():
     # Detect changed features files
@@ -33,12 +34,14 @@ def main():
 
     #Check features file exists in services folder
     services_path = os.getenv('SERVICES_PATH')
-    features_file_exists = check_provider_and_features(services_path, changed_files)
-    for file_path, exists in features_file_exists.items():
-        if exists:
-            print(f"✔ Found provider file and {file_path} in the same directory.")
-        else:
-            print(f"⚠ Found provider file but feature file {file_path} is missing.")
+    features_file_status = map_features_files_status(services_path, changed_files)
+    missing_files = [file_path for file_path, exists in features_file_status.items() if not exists]
+    for file_path in missing_files:
+            print(f"⚠️Feature file {file_path} is missing")
+    if len(missing_files) != len(features_file_status):
+        print(f"All feature files are missing")
+        sys.exit(1)
+
 
 
 if __name__ == "__main__":
