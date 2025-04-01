@@ -38,8 +38,14 @@
   description: AWS Batch
   name: aws:batch
 - color: ff9900
+  description: Amazon Bedrock
+  name: aws:bedrock
+- color: ff9900
   description: AWS Cost Explorer 
   name: aws:ce
+- color: ff9900
+  description: AWS Cloud Control API
+  name: aws:cloudcontrol
 - color: ff9900
   description: AWS CloudFormation
   name: aws:cloudformation
@@ -56,8 +62,17 @@
   description: Amazon CloudWatch
   name: aws:cloudwatch
 - color: ff9900
+  description: AWS CodeBuild
+  name: aws:codebuild
+- color: ff9900
   description: AWS CodeCommit
   name: aws:codecommit
+- color: ff9900
+  description: AWS CodeConnections
+  name: aws:codeconnections
+- color: ff9900
+  description: AWS CodeDeploy
+  name: aws:codedeploy
 - color: ff9900
   description: AWS CodePipeline
   name: aws:codepipeline
@@ -164,11 +179,14 @@
   description: Amazon Kinesis Analytics
   name: aws:kinesisanalytics
 - color: ff9900
-  description: Amazon Kinesis Analytics v2
+  description: Amazon Managed Service for Apache Flink
   name: aws:kinesisanalyticsv2
 - color: ff9900
   description: AWS Key Management Service
   name: aws:kms
+- color: ff9900
+  description: AWS Lake Formation
+  name: aws:lakeformation
 - color: ff9900
   description: AWS Lambda
   name: aws:lambda
@@ -256,6 +274,9 @@
 - color: ff9900
   description: Amazon Simple Email Service v2
   name: aws:sesv2
+- color: ff9900
+  description: AWS Shield
+  name: aws:shield
 - color: ff9900
   description: Amazon Simple Notification Service
   name: aws:sns
