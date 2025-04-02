@@ -35,7 +35,7 @@ def validate_yaml_against_schema(yaml_data: str, json_schema: str, file_path: st
         print(f"Successful validation of file: {file_path}")
         return True
     except ValidationError as e:
-        print(f"Validation failed for {file_path} at path {' -> '.join(str(x) for x in e.path)}: {e.message}")
+        print(f"::notice file={file_path},title=Validation failed at path {' -> '.join(str(x) for x in e.path)}::{e.message}")
         return False
 
 def main():

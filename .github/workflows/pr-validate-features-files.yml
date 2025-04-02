@@ -27,7 +27,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
 
       # Clone the localstack/meta repo to access required Python scripts and JSON schema files
       - name: Checkout localstack/meta repository
