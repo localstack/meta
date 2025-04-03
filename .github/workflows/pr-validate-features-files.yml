@@ -7,10 +7,6 @@ on:
         description: 'Directory containing AWS service implementations in the localstack repository'
         type: string
         required: true
-      pr_number:
-        description: 'Pull request number for workflow execution'
-        type: string
-        required: false
       localstack_meta_ref:
         description: 'Branch to checkout in the localstack/meta repository without "origin/" prefix'
         type: string
@@ -26,7 +22,7 @@ jobs:
       - name: Checkout current repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 2
 
       # Clone the localstack/meta repo to access required Python scripts and JSON schema files
       - name: Checkout localstack/meta repository
@@ -41,11 +37,9 @@ jobs:
 
       - name: Fetch list of modified files in the PR
         id: changed-files
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
         run: |
-          ALL_CHANGED_FILES=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/files" | jq -r '.[].filename' | paste -sd, -)
+          ALL_CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r \
+            --diff-filter=AM ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} | paste -sd "," -)
           echo "all_changed_files=$ALL_CHANGED_FILES" >> $GITHUB_OUTPUT
 
       - name: Set up Python
