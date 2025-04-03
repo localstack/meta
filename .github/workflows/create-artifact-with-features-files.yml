@@ -1,0 +1,30 @@
+name: Artifact with features files
+
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        type: string
+        required: true
+      aws_services_path:
+        description: 'Directory containing AWS service implementations in the localstack repository'
+        type: string
+        required: true
+
+jobs:
+  create-artifact-with-features-files:
+    name: Create artifact with features files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+
+      - name: Create artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: ${{ inputs.artifact_name }}
+            retention-days: 2
+            if-no-files-found: ignore
+            path: |
+              ${{ inputs.aws_services_path }}/**/features.yml
