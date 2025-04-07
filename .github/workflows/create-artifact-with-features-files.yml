@@ -1,4 +1,4 @@
-name: Artifact with features files
+name: AWS / Archive feature files
 
 on:
   workflow_call:
