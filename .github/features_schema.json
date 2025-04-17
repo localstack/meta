@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": ["service", "name", "aws_provider","features", "emulation_level"],
+  "required": ["service", "name", "aws_provider", "features", "emulation_level"],
   "properties": {
     "service": {
       "type": "string",
@@ -56,7 +56,7 @@
           "aws_documentation_url": {
             "type": "string",
             "format": "uri",
-            "pattern": "^https:\/\/([^\/\\s]+\/)(\\S*)$",
+            "pattern": "^https:\/\/[\\w-]+\\.(amazon\\.com|amazonaws\\.com)(\/\\S*)?$",
             "description": "Link to the AWS feature documentation"
           },
           "status": {
