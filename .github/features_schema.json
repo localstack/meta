@@ -55,7 +55,7 @@
           },
           "aws_documentation_url": {
             "type": "string",
-            "pattern": "^https:\/\/[\\w-]+\\.(amazon\\.com|amazonaws\\.com)(\/\\S*)?$",
+            "pattern": "^https:\/\/([^\/\\s]+\\.)*amazon\\.com(\/[^\\s]*)?$",
             "description": "Link to the AWS feature documentation"
           },
           "status": {
