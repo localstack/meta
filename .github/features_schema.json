@@ -1,45 +1,62 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": ["service", "name", "features"],
+  "required": ["service", "name", "aws_provider", "features", "emulation_level"],
   "properties": {
     "service": {
       "type": "string",
-      "description": "Service's abbreviation in AWS"
+      "pattern": "^[A-Za-z0-9]+$",
+      "description": "Short service name"
     },
     "name": {
       "type": "string",
+      "pattern": "^[A-Z][^.\n]*$",
       "description": "The display name of the service from AWS"
+    },
+    "aws_provider": {
+      "type": "object",
+      "required": ["api"],
+      "properties": {
+        "api": {
+          "type": "string",
+          "pattern": "^[a-z0-9-_]+$",
+          "description": "Name of AWS API provider or method name"
+        },
+        "name": {
+          "type": "string",
+          "default": "default",
+          "pattern": "^[a-z0-9-_]+$",
+          "description": "Name of AWS provider implementation"
+        }
+      },
+      "additionalProperties": false
     },
     "emulation_level": {
       "type": "string",
       "enum": ["CRUD", "emulated"],
       "description": "The level of emulation support on the service level"
     },
-    "localstack_page": {
-      "type": "string",
-      "format": "uri",
-      "description": "URL to the LocalStack user guide documentation"
-    },
     "features": {
       "type": "array",
       "description": "List of features supported by the service",
       "items": {
         "type": "object",
-        "required": ["name", "description", "documentation_page", "status"],
+        "required": ["name", "description", "aws_documentation_url", "status"],
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of the feature"
+            "pattern": "^[A-Z][^.\n]*$",
+            "description": "Short name of the feature"
           },
           "description": {
             "type": "string",
+            "pattern": "^[A-Z][^.\n]*$",
             "description": "Description of the feature"
           },
-          "documentation_page": {
+          "aws_documentation_url": {
             "type": "string",
-            "format": "uri",
-            "description": "URL to the AWS feature's documentation"
+            "pattern": "^https://(docs\\.)?aws\\.amazon\\.com(/[^\\s]*)?$",
+            "description": "Link to the AWS feature documentation"
           },
           "status": {
             "type": "string",
@@ -49,14 +66,16 @@
           "api_methods": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^([A-Z][a-z0-9]*)+$"
             },
             "description": "List of API methods associated with the feature"
           },
           "limitations": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[A-Z][^.\n]*$"
             },
             "description": "List of known limitations for the feature"
           },
