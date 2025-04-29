@@ -21,6 +21,10 @@ jobs:
         with:
           python-version: "3.11"
 
+      # FIXME remove this pin once https://github.com/jazzband/pip-tools/issues/2177 is resolved
+      - name: Pin pip to v25.0 (FIXME)
+        run: pip install pip==25.0
+
       # FIXME OS level dependencies differ between the projects, could be a workflow input
       # libvirt-dev: localstack/localstack-ext
       - name: Install OS packages
