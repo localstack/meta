@@ -3,11 +3,11 @@ set -euo pipefail
 
 # input params
 PARENT_FOLDER=${1:-target}
-METRICS_ARTIFACTS_BRANCH=${2:-master}
+METRICS_ARTIFACTS_BRANCH=${2:-main}
 
 # ENVs
-REPOSITORY_NAME=${REPOSITORY_NAME:-localstack-ext}
-ARTIFACT_ID=${ARTIFACT_ID:-parity-metric-ext-raw}
+REPOSITORY_NAME=${REPOSITORY_NAME:-localstack-pro}
+ARTIFACT_ID=${ARTIFACT_ID:-parity-metric-pro-raw}
 WORKFLOW=${WORKFLOW:-"Integration Tests"}
 PREFIX_ARTIFACT=${PREFIX_ARTIFACT:-}
 FILTER_SUCCESS=${FILTER_SUCCESS:-1}
