@@ -89,14 +89,14 @@ jobs:
 
 ## pr-enforce-no-major
 ```yaml
-name: Enforce no major on master
+name: Enforce no major on main
 
 on:
   pull_request_target:
     types: [labeled, unlabeled, opened, edited, synchronize]
-    # only enforce for PRs targeting the master branch
+    # only enforce for PRs targeting the main branch
     branches:
-    - master
+    - main
 
 jobs:
   enforce-no-major:
@@ -110,14 +110,14 @@ jobs:
 
 ## pr-enforce-no-major-minor
 ```yaml
-name: Enforce no major or minor on master
+name: Enforce no major or minor on main
 
 on:
   pull_request_target:
     types: [labeled, unlabeled, opened, edited, synchronize]
-    # only enforce for PRs targeting the master branch
+    # only enforce for PRs targeting the main branch
     branches:
-    - master
+    - main
 
 jobs:
   enforce-no-major-minor:

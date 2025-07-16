@@ -22,4 +22,4 @@ jobs:
           labels: "semver: major, semver: minor"
           add_comment: true
           token: ${{ secrets.github-token }}
-          message: "Currently, only patch changes are allowed on master. Your PR labels ({{ applied }}) indicate that it cannot be merged into the master at this time."
+          message: "Currently, only patch changes are allowed on main. Your PR labels ({{ applied }}) indicate that it cannot be merged into the main at this time."
