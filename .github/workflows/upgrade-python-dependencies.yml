@@ -31,6 +31,9 @@ jobs:
       - name: Upgrade all pinned dependencies
         run: make upgrade-pinned-dependencies
 
+      - name: Upgrade all azure api specification objects
+        run: make update-api-spec-usage
+
       - name: Create PR
         uses: peter-evans/create-pull-request@v7
         with:
