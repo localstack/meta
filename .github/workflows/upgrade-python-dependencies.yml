@@ -42,4 +42,3 @@ jobs:
           commit-message: "Upgrade pinned Python dependencies"
           labels: "area: dependencies, semver: patch"
           token: ${{ secrets.github-token }}
-          reviewers: alexrashed,silv-io
