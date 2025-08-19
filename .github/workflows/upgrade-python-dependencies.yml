@@ -2,6 +2,12 @@ name: Upgrade pinned Python dependencies
 
 on:
   workflow_call:
+    inputs:
+      labels:
+        required: false
+        type: string
+        default: "area: dependencies, semver: patch"
+        description: Comma-separated list of labels to apply to the PR
     secrets:
       github-token:
         required: true
@@ -40,5 +46,5 @@ jobs:
           author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
           committer: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
           commit-message: "Upgrade pinned Python dependencies"
-          labels: "area: dependencies, semver: patch"
+          labels: ${{ inputs.labels }}
           token: ${{ secrets.github-token }}
