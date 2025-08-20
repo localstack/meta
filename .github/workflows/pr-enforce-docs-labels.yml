@@ -8,7 +8,7 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  add-to-project:
+  enforce-docs-label:
     name: Add to project
     uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
     with:
