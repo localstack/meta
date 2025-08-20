@@ -128,6 +128,33 @@ jobs:
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
+## pr-enforce-docs-labels
+
+This reusable workflow enforces that pull requests have appropriate documentation labels (`needs-docs` or `skip-docs`). This helps ensure that documentation requirements are clearly communicated and tracked across repositories.
+
+The workflow can be used like this:
+```yaml
+name: Enforce Docs Labels
+
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened, edited, synchronize]
+
+jobs:
+  enforce-docs-labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-docs-labels.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
+
+### Label Definitions
+
+The documentation labels are defined in `.github/labels-docs.yml`:
+- `needs-docs` (red): Pull request requires documentation updates
+- `skip-docs` (green): Pull request does not require documentation changes
+
+These labels can be synced across repositories using the `sync-labels` workflow.
+
 ## upgrade-python-dependencies
 
 This reusable workflow adds an automated upgrade of dependencies in python repositories.
