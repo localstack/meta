@@ -8,30 +8,29 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  semver:
+  lables:
     runs-on: ubuntu-latest
     steps:
-      - uses: mheap/github-action-required-labels@v5
+      - name: semver
+        uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
           labels: "semver: patch, semver: minor, semver: major"
           token: ${{ secrets.github-token }}
-  docs:
-    runs-on: ubuntu-latest
-    if: '!cancelled()'
-    steps:
-      - uses: mheap/github-action-required-labels@v5
+
+      - name: docs
+        uses: mheap/github-action-required-labels@v5
+        if: '!cancelled()'
         with:
           mode: exactly
           count: 1
           labels: "docs: needed, docs: skip"
           token: ${{ secrets.github-token }}
-  notes:
-    runs-on: ubuntu-latest
-    if: '!cancelled()'
-    steps:
-      - uses: mheap/github-action-required-labels@v5
+
+      - name: notes
+        uses: mheap/github-action-required-labels@v5
+        if: '!cancelled()'
         with:
           mode: exactly
           count: 1
