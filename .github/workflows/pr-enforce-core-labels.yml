@@ -1,4 +1,4 @@
-name: Enforce labels
+name: Enforce core PR labels
 
 on:
   workflow_call:
@@ -8,29 +8,30 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  labels:
+  semver:
     runs-on: ubuntu-latest
     steps:
-      - name: semver
-        uses: mheap/github-action-required-labels@v5
+      - uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
           labels: "semver: patch, semver: minor, semver: major"
           token: ${{ secrets.github-token }}
 
-      - name: docs
-        uses: mheap/github-action-required-labels@v5
-        if: '!cancelled()'
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
           labels: "docs: needed, docs: skip"
           token: ${{ secrets.github-token }}
 
-      - name: notes
-        uses: mheap/github-action-required-labels@v5
-        if: '!cancelled()'
+  notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
