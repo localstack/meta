@@ -1,4 +1,4 @@
-name: Enforce core PR labels
+name: Enforce PR labels
 
 on:
   workflow_call:
