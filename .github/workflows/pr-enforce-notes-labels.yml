@@ -1,4 +1,4 @@
-name: Enforce Docs labels
+name: Enforce SemVer labels
 
 on:
   workflow_call:
@@ -8,10 +8,10 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  enforce-docs-label:
-    name: Enforce "docs" labels
+  enforce-notes-labels:
+    name: Enforce "notes" labels
     uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
     with:
-      labels: "docs: needed, docs: skip"
+      labels: "notes: needed, notes: skip"
     secrets:
       github-token: ${{ secrets.github-token }}

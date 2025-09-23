@@ -1,0 +1,27 @@
+name: Enforce Core PR labels
+
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub personal access token with write access to the project
+
+# TODO change ref from `notes-labels` to `main` before merging
+jobs:
+  enforce-semver-labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-semver-labels.yml@notes-labels
+    secrets:
+      github-token: ${{ secrets.github-token }}
+
+  enforce-notes-labels:
+    if: '!cancelled()'
+    uses: localstack/meta/.github/workflows/pr-enforce-notes-labels.yml@notes-labels
+    secrets:
+      github-token: ${{ secrets.github-token }}
+
+  enforce-docs-labels:
+    if: '!cancelled()'
+    uses: localstack/meta/.github/workflows/pr-enforce-docs-labels.yml@notes-labels
+    secrets:
+      github-token: ${{ secrets.github-token }}

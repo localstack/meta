@@ -1,0 +1,6 @@
+- color: D73A4A
+  description: Pull request should be mentioned in the release notes
+  name: 'notes: needed'
+- color: 0E8A16
+  description: Pull request does not have to be mentioned in the release notes
+  name: 'notes: skip'

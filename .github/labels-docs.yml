@@ -1,6 +1,6 @@
 - color: D73A4A
   description: Pull request requires documentation updates
-  name: 'needs-docs'
+  name: 'docs: needed'
 - color: 0E8A16
   description: Pull request does not require documentation changes
-  name: 'skip-docs'
+  name: 'docs: skip'
