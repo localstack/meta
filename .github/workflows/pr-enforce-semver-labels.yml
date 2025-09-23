@@ -1,5 +1,3 @@
-name: Enforce SemVer labels
-
 on:
   workflow_call:
     secrets:
@@ -9,7 +7,6 @@ on:
 
 jobs:
   enforce-semver-labels:
-    name: Enforce "semver" labels
     uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
     with:
       labels: "semver: patch, semver: minor, semver: major"
