@@ -8,8 +8,11 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  lables:
+  labels:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - name: semver
         uses: mheap/github-action-required-labels@v5
@@ -17,6 +20,7 @@ jobs:
           mode: exactly
           count: 1
           labels: "semver: patch, semver: minor, semver: major"
+          add_comment: true
           token: ${{ secrets.github-token }}
 
       - name: docs
@@ -26,6 +30,7 @@ jobs:
           mode: exactly
           count: 1
           labels: "docs: needed, docs: skip"
+          add_comment: true
           token: ${{ secrets.github-token }}
 
       - name: notes
@@ -35,4 +40,5 @@ jobs:
           mode: exactly
           count: 1
           labels: "notes: needed, notes: skip"
+          add_comment: true
           token: ${{ secrets.github-token }}
