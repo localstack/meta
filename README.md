@@ -144,6 +144,21 @@ jobs:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
 
+## pr-enforce-labels
+```yaml
+name: Enforce Labels
+
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened]
+
+jobs:
+  labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-core-labels.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
+
 ## upgrade-python-dependencies
 
 This reusable workflow adds an automated upgrade of dependencies in python repositories.
