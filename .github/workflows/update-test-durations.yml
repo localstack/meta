@@ -82,7 +82,7 @@ jobs:
             if [ "${{ inputs.path }}" == "localstack-pro" ]; then
               WF_FILE=".github/workflows/aws_main.yml"
             else
-              WF_FILE=."github/workflows/aws-main.yml"
+              WF_FILE=".github/workflows/aws-main.yml"
             fi
             
             latest_workflow_id=$(curl -s https://api.github.com/repos/localstack/${{ inputs.path }}/actions/workflows \
