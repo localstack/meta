@@ -7,10 +7,6 @@ on:
         description: "source repo"
         required: true
         type: string
-      workflowName:
-        description: "workflow name as shown in Actions (e.g., 'AWS / Build, Test, Push' or a workflow file name)"
-        required: true
-        type: string
       branch:
         description: "branch to search"
         default: "main"
@@ -83,8 +79,14 @@ jobs:
 
         - name: Latest run-id from repository
           run: |
+            if [ "${{ inputs.path }}" = "localstack-pro" ]; then
+              WF_FILE=".github/workflows/aws_main.yml"
+            else
+              WF_FILE=".github/workflows/aws-main.yml"
+            fi
+            
             latest_workflow_id=$(curl -s https://api.github.com/repos/localstack/${{ inputs.path }}/actions/workflows \
-              | jq '.workflows[] | select(.path==".github/workflows/aws-main.yml").id')
+              | jq '.workflows[] | select(.path=="$WF_FILE").id')
             latest_run_id=$(curl -s \
               "https://api.github.com/repos/localstack/${{ inputs.path }}/actions/workflows/${latest_workflow_id}/runs?branch=main&status=success&per_page=30" \
                 | jq '[.workflow_runs[] | select(.event == "schedule")][0].id')
