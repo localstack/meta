@@ -1,0 +1,39 @@
+name: Enforce PR labels
+
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub personal access token with write access to the project
+
+jobs:
+  semver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "semver: patch, semver: minor, semver: major"
+          token: ${{ secrets.github-token }}
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "docs: needed, docs: skip"
+          token: ${{ secrets.github-token }}
+
+  notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "notes: needed, notes: skip"
+          token: ${{ secrets.github-token }}

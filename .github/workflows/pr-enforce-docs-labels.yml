@@ -1,5 +1,3 @@
-name: Enforce Docs labels
-
 on:
   workflow_call:
     secrets:
@@ -9,9 +7,8 @@ on:
 
 jobs:
   enforce-docs-label:
-    name: Add to project
     uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
     with:
-      labels: "needs-docs, skip-docs"
+      labels: "docs: needed, docs: skip"
     secrets:
       github-token: ${{ secrets.github-token }}

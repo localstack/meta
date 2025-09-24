@@ -14,7 +14,7 @@ on:
 
 jobs:
   # make sure _all_ PRs have a semver label
-  enforce-semver-label:
+  enforce-pr-labels:
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@v5

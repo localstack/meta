@@ -17,7 +17,7 @@ jobs:
   sync-with-project:
     uses: localstack/meta/.github/workflows/sync-labels.yml@main
     with:
-        categories: status,aws,semver
+        categories: status,aws,semver,docs,notes
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
@@ -73,27 +73,13 @@ jobs:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
 
-## pr-enforce-semver-labels
-```yaml
-name: Enforce SemVer Labels
-on:
-  pull_request_target:
-    types: [labeled, unlabeled, opened, edited, synchronize]
-
-jobs:
-  enforce-semver-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-semver-labels.yml@main
-    secrets:
-      github-token: ${{ secrets.REPO_ACCESS_PAT }}
-```
-
 ## pr-enforce-no-major
 ```yaml
 name: Enforce no major on main
 
 on:
   pull_request_target:
-    types: [labeled, unlabeled, opened, edited, synchronize]
+    types: [labeled, unlabeled, opened]
     # only enforce for PRs targeting the main branch
     branches:
     - main
@@ -114,7 +100,7 @@ name: Enforce no major or minor on main
 
 on:
   pull_request_target:
-    types: [labeled, unlabeled, opened, edited, synchronize]
+    types: [labeled, unlabeled, opened]
     # only enforce for PRs targeting the main branch
     branches:
     - main
@@ -128,17 +114,28 @@ jobs:
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
+
+## pr-enforce-semver-labels
+```yaml
+name: Enforce SemVer Labels
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened]
+
+jobs:
+  enforce-semver-labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-semver-labels.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
+
 ## pr-enforce-docs-labels
-
-This reusable workflow enforces that pull requests have appropriate documentation labels (`needs-docs` or `skip-docs`). This helps ensure that documentation requirements are clearly communicated and tracked across repositories.
-
-The workflow can be used like this:
 ```yaml
 name: Enforce Docs Labels
 
 on:
   pull_request_target:
-    types: [labeled, unlabeled, opened, edited, synchronize]
+    types: [labeled, unlabeled, opened]
 
 jobs:
   enforce-docs-labels:
@@ -147,55 +144,39 @@ jobs:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
 
-### Label Definitions
+## pr-enforce-labels
+```yaml
+name: Enforce Labels
 
-The documentation labels are defined in `.github/labels-docs.yml`:
-- `needs-docs` (red): Pull request requires documentation updates
-- `skip-docs` (green): Pull request does not require documentation changes
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened]
 
-These labels can be synced across repositories using the `sync-labels` workflow.
+jobs:
+  labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-core-labels.yml@main
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
 
 ## upgrade-python-dependencies
 
 This reusable workflow adds an automated upgrade of dependencies in python repositories.
-As a prerequisite the repository must define the make target `upgrade-all-deps` which should produce some kind of lock file checked in into the repository.
+As a prerequisite the repository must define the make target `upgrade-pinned-dependencies` which should produce some kind of lock file checked in into the repository.
 
 ```yaml
-name: Upgrade pinned Python dependencies
+name: Upgrade Pinned Python Dependencies
 
 on:
-  workflow_call:
-    secrets:
-      github-token:
-        required: true
-        description: A GitHub token with access to the issues of the calling repo
+  schedule:
+    - cron: 0 5 * * TUE
+  workflow_dispatch:
 
 jobs:
   upgrade-dependencies:
-    name: Upgrade Pinned Python Dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.11
-        id: setup-python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Upgrade all requirements files
-        run: make upgrade-all-reqs
-
-      - name: Create PR
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: "Upgrade pinned Python dependencies"
-          body: "This PR upgrades all the pinned Python dependencies."
-          branch: "upgrade-dependencies"
-          author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
-          committer: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
-          commit-message: "Upgrade pinned Python dependencies"
-          labels: "area: dependencies, semver: patch"
-          token: ${{ secrets.github-token }}
+    uses: localstack/meta/.github/workflows/upgrade-python-dependencies.yml@main
+    secrets:
+      github-token: ${{ secrets.PRO_ACCESS_TOKEN }}
+    with:
+      labels: "area: dependencies, semver: patch, docs: skip, notes: skip"
 ```
