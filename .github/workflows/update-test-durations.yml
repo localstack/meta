@@ -79,7 +79,7 @@ jobs:
 
         - name: Latest run-id from repository
           run: |
-            if [ "${{ inputs.path }}" = "localstack-pro" ]; then
+            if [ "${{ inputs.path }}" == "localstack-pro" ]; then
               WF_FILE=".github/workflows/aws_main.yml"
             else
               WF_FILE=".github/workflows/aws-main.yml"
