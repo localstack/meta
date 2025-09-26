@@ -78,6 +78,8 @@ jobs:
             path: ${{ inputs.path }}
 
         - name: Latest run-id from repository
+          env:
+            GH_TOKEN: ${{ secrets.gh-token }}
           run: |
             set -euo pipefail
 
