@@ -40,6 +40,10 @@ on:
         default: "UPLOAD_ARTIFACT"
         required: false
         type: string
+      pr-dry-run:
+        description: "If true, simulate PR creation without pushing/opening"
+        type: boolean
+        default: false
       pr-title:
         default: "[Testing] Update test durations"
         required: false
@@ -81,27 +85,18 @@ jobs:
           env:
             GH_TOKEN: ${{ secrets.gh-token }}
           run: |
-            set -euo pipefail
 
             REPO_PATH="${{ inputs.path }}"  # 'localstack' or 'localstack-pro'
             if [ "$REPO_PATH" = "localstack-pro" ]; then
-              WF_FILE=".github/workflows/aws_main.yml"   # underscore in Pro
+              WF_FILE=".github/workflows/aws_main.yml"
             else
-              WF_FILE=".github/workflows/aws-main.yml"   # hyphen in Community
+              WF_FILE=".github/workflows/aws-main.yml"
             fi
 
             wfs_url="https://api.github.com/repos/localstack/${REPO_PATH}/actions/workflows?per_page=100"
             latest_workflow_id=$(
               curl -sS -H "Authorization: Bearer $GH_TOKEN" "$wfs_url" | jq -r --arg wf "$WF_FILE" '.workflows[] | select(.path==$wf) | .id' | head -n1
             )
-
-            if [ -z "${latest_workflow_id:-}" ]; then
-              echo "::error::Could not find workflow by path '$WF_FILE' in localstack/${REPO_PATH}"
-              echo "Available workflows (name | path):"
-              curl -sS -H "Authorization: Bearer $GH_TOKEN" "$wfs_url" \
-                | jq -r '.workflows[] | "\(.name) | \(.path)"'
-              exit 1
-            fi
 
             runs_url="https://api.github.com/repos/localstack/${REPO_PATH}/actions/workflows/${latest_workflow_id}/runs?branch=main&status=success&per_page=50"
             latest_run_id=$(
@@ -149,6 +144,9 @@ jobs:
             author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
             committer: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
             commit-message: "CI: update .test_durations to latest version"
+            draft: true
+            delete-branch: true
+            dry-run: true
             path: ${{ inputs.path }}
             add-paths: ${{ inputs.outPath }}
             labels: ${{ inputs.pr-labels }}
