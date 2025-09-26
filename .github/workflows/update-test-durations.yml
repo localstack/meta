@@ -81,7 +81,6 @@ jobs:
           run: |
             set -euo pipefail
 
-#            trying fix
             REPO_PATH="${{ inputs.path }}"  # 'localstack' or 'localstack-pro'
             if [ "$REPO_PATH" = "localstack-pro" ]; then
               WF_FILE=".github/workflows/aws_main.yml"   # underscore in Pro
@@ -89,7 +88,6 @@ jobs:
               WF_FILE=".github/workflows/aws-main.yml"   # hyphen in Community
             fi
 
-            # Authenticated list of workflows (avoid 404/ratelimit/private misses)
             wfs_url="https://api.github.com/repos/localstack/${REPO_PATH}/actions/workflows?per_page=100"
             latest_workflow_id=$(
               curl -sS -H "Authorization: Bearer $GH_TOKEN" "$wfs_url" | jq -r --arg wf "$WF_FILE" '.workflows[] | select(.path==$wf) | .id' | head -n1
@@ -113,17 +111,6 @@ jobs:
               exit 1
             fi
 
-#            if [ "${{ inputs.path }}" == "localstack-pro" ]; then
-#              WF_FILE=".github/workflows/aws_main.yml"
-#            else
-#              WF_FILE=".github/workflows/aws-main.yml"
-#            fi
-#
-#            latest_workflow_id=$(curl -s https://api.github.com/repos/localstack/${{ inputs.path }}/actions/workflows \
-#              | jq '.workflows[] | select(.path=="$WF_FILE").id')
-#            latest_run_id=$(curl -s \
-#              "https://api.github.com/repos/localstack/${{ inputs.path }}/actions/workflows/${latest_workflow_id}/runs?branch=main&status=success&per_page=30" \
-#                | jq '[.workflow_runs[] | select(.event == "schedule")][0].id')
             echo "Latest run: https://github.com/localstack/${{ inputs.path }}/actions/runs/${latest_run_id}"
             echo "AWS_MAIN_LATEST_SCHEDULED_RUN_ID=${latest_run_id}" >> $GITHUB_ENV
 
