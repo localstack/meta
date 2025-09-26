@@ -40,10 +40,6 @@ on:
         default: "UPLOAD_ARTIFACT"
         required: false
         type: string
-      pr-dry-run:
-        description: "If true, simulate PR creation without pushing/opening"
-        type: boolean
-        default: false
       pr-title:
         default: "[Testing] Update test durations"
         required: false
@@ -144,9 +140,6 @@ jobs:
             author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
             committer: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
             commit-message: "CI: update .test_durations to latest version"
-            draft: true
-            delete-branch: true
-            dry-run: true
             path: ${{ inputs.path }}
             add-paths: ${{ inputs.outPath }}
             labels: ${{ inputs.pr-labels }}
