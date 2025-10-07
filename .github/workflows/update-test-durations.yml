@@ -86,7 +86,7 @@ jobs:
           uses: peter-evans/create-pull-request@v7
           if: ${{ success() && inputs.publish-method == 'CREATE_PR' }}
           with:
-            title: "[Testing] Update test durations"
+            title: "Update test durations"
             body: "This PR includes an updated `.test_durations` file, generated based on latest test durations from main"
             branch: "test-durations-auto-updates"
             author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
