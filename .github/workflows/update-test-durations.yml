@@ -3,57 +3,18 @@ name: Update test durations
 on:
   workflow_call:
     inputs:
-      repo:
-        description: "source repo"
+      repository-name:
+        description: "Repository name: 'localstack' or 'localstack-pro'"
         required: true
         type: string
-      branch:
-        description: "branch to search"
-        default: "main"
-        required: false
-        type: string
-      eventFilter:
-        description: "schedule | any-completed"
-        default: "schedule"
-        required: false
-        type: string
-      platform:
-        description: "artifact platform tag used in filenames"
-        default: "amd64"
-        required: false
-        type: string
-      artifactPattern:
-        description: "artifact name pattern; defaults to pytest-split-durations-${platform}-*"
-        required: false
-        type: string
-      path:
-        description: "repository path (e.g., 'localstack' or 'localstack-pro')"
-        required: true
-        type: string
-      outPath:
-        description: "path to write merged durations"
+      test-durations-file-path:
+        description: "Path to the test durations file in the repository"
         default: ".test_durations"
         required: false
         type: string
-      publishMethod:
-        description: "UPLOAD_ARTIFACT or CREATE_PR"
+      publish-method:
+        description: "Method to publish the test duration update results: UPLOAD_ARTIFACT or CREATE_PR"
         default: "UPLOAD_ARTIFACT"
-        required: false
-        type: string
-      pr-title:
-        default: "[Testing] Update test durations"
-        required: false
-        type: string
-      pr-body:
-        default: "This PR includes an updated `.test_durations` file, generated based on latest test durations from main"
-        required: false
-        type: string
-      pr-branch:
-        default: "test-durations-auto-updates"
-        required: false
-        type: string
-      pr-labels:
-        default: "semver: patch, area: testing, area: ci, skip-docs"
         required: false
         type: string
     secrets:
@@ -75,36 +36,27 @@ jobs:
     steps:
         - uses: actions/checkout@v5
           with:
-            path: ${{ inputs.path }}
+            path: ${{ inputs.repository-name }}
 
         - name: Latest run-id from repository
           env:
             GH_TOKEN: ${{ secrets.gh-token }}
           run: |
-
-            REPO_PATH="${{ inputs.path }}"  # 'localstack' or 'localstack-pro'
-            if [ "$REPO_PATH" = "localstack-pro" ]; then
-              WF_FILE=".github/workflows/aws_main.yml"
+            repository_name="${{ inputs.repository-name }}"  # 'localstack' or 'localstack-pro'
+            if [ "$repository_name" = "localstack-pro" ]; then
+              workflow_file_name="aws_main.yml"
             else
-              WF_FILE=".github/workflows/aws-main.yml"
+              workflow_file_name="aws-main.yml"
             fi
 
-            wfs_url="https://api.github.com/repos/localstack/${REPO_PATH}/actions/workflows?per_page=100"
-            latest_workflow_id=$(
-              curl -sS -H "Authorization: Bearer $GH_TOKEN" "$wfs_url" | jq -r --arg wf "$WF_FILE" '.workflows[] | select(.path==$wf) | .id' | head -n1
-            )
-
-            runs_url="https://api.github.com/repos/localstack/${REPO_PATH}/actions/workflows/${latest_workflow_id}/runs?branch=main&status=success&per_page=50"
-            latest_run_id=$(
-              curl -sS -H "Authorization: Bearer $GH_TOKEN" "$runs_url" | jq -r '[.workflow_runs[] | select(.event=="schedule")][0].id // empty'
-            )
+            latest_run_id=$(gh api /repos/localstack/${repository_name}/actions/workflows/${workflow_file_name}/runs?branch=main&status=success&event=schedule -q '.workflow_runs | .[0].id')
 
             if [ -z "${latest_run_id:-}" ]; then
               echo "::error::No successful scheduled runs found for '$WF_FILE' on branch 'main'"
               exit 1
             fi
 
-            echo "Latest run: https://github.com/localstack/${{ inputs.path }}/actions/runs/${latest_run_id}"
+            echo "Latest run: https://github.com/localstack/${repository_name}/actions/runs/${latest_run_id}"
             echo "AWS_MAIN_LATEST_SCHEDULED_RUN_ID=${latest_run_id}" >> $GITHUB_ENV
 
         - name: Load test durations
@@ -119,28 +71,28 @@ jobs:
         - name: Merge test durations files
           shell: bash
           run: |
-            jq -s 'add | to_entries | sort_by(.key) | from_entries' artifacts-test-durations/.test_durations-${{ env.PLATFORM }}*  > ${{ inputs.outPath }} || echo "::warning::Test durations were not merged"
+            jq -s 'add | to_entries | sort_by(.key) | from_entries' artifacts-test-durations/.test_durations-${{ env.PLATFORM }}*  > ${{ inputs.test-durations-file-path }} || echo "::warning::Test durations were not merged"
 
         - name: Upload artifact with merged test durations
           uses: actions/upload-artifact@v4
-          if: ${{ success() && inputs.publishMethod == 'UPLOAD_ARTIFACT' }}
+          if: ${{ success() && inputs.publish-method == 'UPLOAD_ARTIFACT' }}
           with:
             name: merged-test-durations
-            path: ${{ inputs.outPath }}
+            path: ${{ inputs.test-durations-file-path }}
             include-hidden-files: true
             if-no-files-found: error
 
         - name: Create PR
           uses: peter-evans/create-pull-request@v7
-          if: ${{ success() && inputs.publishMethod == 'CREATE_PR' }}
+          if: ${{ success() && inputs.publish-method == 'CREATE_PR' }}
           with:
-            title: ${{ inputs.pr-title }}
-            body: ${{ inputs.pr-body }}
-            branch: ${{ inputs.pr-branch }}
+            title: "[Testing] Update test durations"
+            body: "This PR includes an updated `.test_durations` file, generated based on latest test durations from main"
+            branch: "test-durations-auto-updates"
             author: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
             committer: "LocalStack Bot <localstack-bot@users.noreply.github.com>"
             commit-message: "CI: update .test_durations to latest version"
-            path: ${{ inputs.path }}
-            add-paths: ${{ inputs.outPath }}
-            labels: ${{ inputs.pr-labels }}
+            path: ${{ inputs.repository-name }}
+            add-paths: ${{ inputs.test-durations-file-path }}
+            labels: "semver: patch, area: testing, area: ci, docs: skip, notes: skip"
             token: ${{ secrets.pr-token }}
