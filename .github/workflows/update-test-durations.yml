@@ -31,7 +31,7 @@ env:
 
 jobs:
   report:
-    name: "Download, merge and create PR with test durations"
+    name: "Download, merge and publish test durations"
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v5
