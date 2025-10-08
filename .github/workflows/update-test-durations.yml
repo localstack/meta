@@ -49,7 +49,7 @@ jobs:
               workflow_file_name="aws-main.yml"
             fi
 
-            latest_run_id=$(gh api /repos/localstack/${repository_name}/actions/workflows/${workflow_file_name}/runs?branch=main&status=success&event=schedule -q '.workflow_runs | .[0].id')
+            latest_run_id=$(gh api /repos/localstack/${repository_name}/actions/workflows/${workflow_file_name}/runs\?branch\=main\&status\=success\&event\=schedule -q '.workflow_runs | .[0].id')
 
             if [ -z "${latest_run_id:-}" ]; then
               echo "::error::No successful scheduled runs found for '$WF_FILE' on branch 'main'"
