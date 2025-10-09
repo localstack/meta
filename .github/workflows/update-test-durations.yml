@@ -38,15 +38,17 @@ jobs:
           with:
             path: ${{ inputs.repository-name }}
 
-        - name: Latest run-id from repository
+        - name: Latest run-id from repository & artifacts prefix
           env:
             GH_TOKEN: ${{ secrets.gh-token }}
           run: |
             repository_name="${{ inputs.repository-name }}"  # 'localstack' or 'localstack-pro'
             if [ "$repository_name" = "localstack-pro" ]; then
               workflow_file_name="aws_main.yml"
+              test_durations_artifacts_prefix="pytest-split-durations-pro"
             else
               workflow_file_name="aws-main.yml"
+              test_durations_artifacts_prefix="pytest-split-durations"
             fi
 
             latest_run_id=$(gh api /repos/localstack/${repository_name}/actions/workflows/${workflow_file_name}/runs\?branch\=main\&status\=success\&event\=schedule -q '.workflow_runs | .[0].id')
@@ -58,11 +60,13 @@ jobs:
 
             echo "Latest run: https://github.com/localstack/${repository_name}/actions/runs/${latest_run_id}"
             echo "AWS_MAIN_LATEST_SCHEDULED_RUN_ID=${latest_run_id}" >> $GITHUB_ENV
+            echo "Expected test durations artifacts prefix: ${test_durations_artifacts_prefix}"
+            echo "TEST_DURATIONS_ARTIFACTS_PREFIX=${test_durations_artifacts_prefix}" >> $GITHUB_ENV
 
         - name: Load test durations
           uses: actions/download-artifact@v5
           with:
-            pattern: pytest-split-durations-${{ env.PLATFORM }}-*
+            pattern: ${{ env.TEST_DURATIONS_ARTIFACTS_PREFIX }}-${{ env.PLATFORM }}-*
             path: artifacts-test-durations
             merge-multiple: true
             run-id: ${{ env.AWS_MAIN_LATEST_SCHEDULED_RUN_ID }}
