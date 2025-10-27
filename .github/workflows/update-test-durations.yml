@@ -64,7 +64,7 @@ jobs:
             echo "TEST_DURATIONS_ARTIFACTS_PREFIX=${test_durations_artifacts_prefix}" >> $GITHUB_ENV
 
         - name: Load test durations
-          uses: actions/download-artifact@v5
+          uses: actions/download-artifact@v6
           with:
             pattern: ${{ env.TEST_DURATIONS_ARTIFACTS_PREFIX }}-${{ env.PLATFORM }}-*
             path: artifacts-test-durations
