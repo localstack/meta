@@ -20,13 +20,13 @@ jobs:
     steps:
       # Clone repository that's calling this reusable workflow
       - name: Checkout current repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
       # Clone the localstack/meta repo to access required Python scripts and JSON schema files
       - name: Checkout localstack/meta repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: 'localstack/meta'
           sparse-checkout: |

@@ -34,7 +34,7 @@ jobs:
     name: "Download, merge and publish test durations"
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v5
+        - uses: actions/checkout@v6
           with:
             path: ${{ inputs.repository-name }}
 
