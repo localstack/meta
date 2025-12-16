@@ -87,7 +87,7 @@ jobs:
             if-no-files-found: error
 
         - name: Create PR
-          uses: peter-evans/create-pull-request@v7
+          uses: peter-evans/create-pull-request@v8
           if: ${{ success() && inputs.publish-method == 'CREATE_PR' }}
           with:
             title: "Update test durations"
