@@ -78,7 +78,7 @@ jobs:
             jq -s 'add | to_entries | sort_by(.key) | from_entries' artifacts-test-durations/.test_durations-${{ env.PLATFORM }}*  > ${{ inputs.test-durations-file-path }} || echo "::warning::Test durations were not merged"
 
         - name: Upload artifact with merged test durations
-          uses: actions/upload-artifact@v5
+          uses: actions/upload-artifact@v6
           if: ${{ success() && inputs.publish-method == 'UPLOAD_ARTIFACT' }}
           with:
             name: merged-test-durations
