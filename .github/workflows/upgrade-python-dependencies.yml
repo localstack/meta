@@ -21,11 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      # TODO remove this section once we moved to `uv` everywhere
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v6
         with:
           python-version-file: '.python-version'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
 
       # FIXME OS level dependencies differ between the projects, could be a workflow input
       # libvirt-dev: localstack/localstack-pro
