@@ -1,3 +1,4 @@
+# Enforces changes merged to main to be of patch only. Activated during a release code-freeze.
 name: Enforce Patch Only
 
 on:
@@ -8,7 +9,6 @@ on:
         description: A GitHub token with access to the issues of the calling repo
 
 jobs:
-  # ensures that only patch changes are merged into main.
   enforce-no-major-label:
     runs-on: ubuntu-latest
     permissions:
