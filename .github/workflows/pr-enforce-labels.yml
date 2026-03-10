@@ -8,17 +8,19 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  semver:
+  calver:
+    name: Calendar Versioning Labels
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
-          labels: "semver: patch, semver: minor, semver: major"
+          labels: "calver: patch, calver: monthly, calver: breaking"
           token: ${{ secrets.github-token }}
 
   docs:
+    name: Documentation Labels
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@v5
@@ -29,6 +31,7 @@ jobs:
           token: ${{ secrets.github-token }}
 
   notes:
+    name: Notes Labels
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@v5
