@@ -8,7 +8,7 @@ on:
         description: A GitHub token with access to the issues of the calling repo
 
 jobs:
-  # make sure no PRs with major or minor label are merged
+  # ensures that only patch changes are merged into main.
   enforce-no-major-label:
     runs-on: ubuntu-latest
     permissions:
@@ -19,7 +19,7 @@ jobs:
         with:
           mode: exactly
           count: 0
-          labels: "calver: monthly, calver: breaking, semver: major, semver: minor"
+          labels: "calver: monthly, calver: breaking"
           add_comment: true
           token: ${{ secrets.github-token }}
           message: "Currently, only patch changes are allowed on main. Your PR labels ({{ applied }}) indicate that it cannot be merged into the main at this time."
