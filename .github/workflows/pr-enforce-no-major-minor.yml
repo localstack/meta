@@ -1,0 +1,25 @@
+name: Enforce Patch Only
+
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
+        description: A GitHub token with access to the issues of the calling repo
+
+jobs:
+  # make sure no PRs with major or minor label are merged
+  enforce-no-major-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 0
+          labels: "calver: monthly, calver: breaking"
+          add_comment: true
+          token: ${{ secrets.github-token }}
+          message: "Currently, only patch changes are allowed on main. Your PR labels ({{ applied }}) indicate that it cannot be merged into the main at this time."
