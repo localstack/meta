@@ -13,7 +13,7 @@ on:
         description: A GitHub token with access to the issues of the calling repo
 
 jobs:
-  # make sure _all_ PRs have a semver label
+  # make sure _all_ PRs have a calver, docs and notes label.
   enforce-pr-labels:
     runs-on: ubuntu-latest
     steps:
