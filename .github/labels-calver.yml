@@ -1,0 +1,9 @@
+- color: FF5959
+  description: Breaking changes which must be reviewed before being included in the monthly release.
+  name: 'calver: breaking'
+- color: AB9EF7
+  description: Changes which should be included in the monthly release.
+  name: 'calver: monthly'
+- color: 9EC9F7
+  description: Non-breaking changes which should be included in a patch release.
+  name: 'calver: patch'
