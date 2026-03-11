@@ -10,31 +10,22 @@ on:
 
 jobs:
   calver-labels:
-    name: CalVer
-    runs-on: ubuntu-latest
-    steps:
-      - uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
-        with:
-          labels: "calver: patch, calver: monthly, calver: breaking"
-        secrets:
-          github-token: ${{ secrets.github-token }}
+    uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
+    with:
+      labels: "calver: patch, calver: monthly, calver: breaking"
+    secrets:
+      github-token: ${{ secrets.github-token }}
 
   docs-labels:
-    name: Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
-        with:
-          labels: "docs: needed, docs: skip"
-        secrets:
-          github-token: ${{ secrets.github-token }}
+    uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
+    with:
+      labels: "docs: needed, docs: skip"
+    secrets:
+      github-token: ${{ secrets.github-token }}
 
   notes-labels:
-    name: Notes
-    runs-on: ubuntu-latest
-    steps:
-      - uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
-        with:
-          labels: "notes: needed, notes: skip"
-        secrets:
-          github-token: ${{ secrets.github-token }}
+    uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
+    with:
+      labels: "notes: needed, notes: skip"
+    secrets:
+      github-token: ${{ secrets.github-token }}
