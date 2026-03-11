@@ -9,17 +9,30 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  calver-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-calver-labels.yml@aidehn/feat/calendar-versioning-migrations-and-cleanup
-    secrets:
-      github-token: ${{ secrets.github-token }}
-
-  docs-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-docs-labels.yml@aidehn/feat/calendar-versioning-migrations-and-cleanup
-    secrets:
-      github-token: ${{ secrets.github-token }}
-
-  notes-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-notes-labels.yml@aidehn/feat/calendar-versioning-migrations-and-cleanup
-    secrets:
-      github-token: ${{ secrets.github-token }}
+  calver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "calver: patch, calver: monthly, calver: breaking"
+          token: ${{ secrets.github-token }}
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "docs: needed, docs: skip"
+          token: ${{ secrets.github-token }}
+  notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "notes: needed, notes: skip"
+          token: ${{ secrets.github-token }}
