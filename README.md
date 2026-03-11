@@ -73,9 +73,9 @@ jobs:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
 
-## pr-enforce-no-major
+## pr-enforce-no-breaking-changes
 ```yaml
-name: Enforce no major on main
+name: Enforce no breaking changes
 
 on:
   pull_request_target:
@@ -85,16 +85,16 @@ on:
     - main
 
 jobs:
-  enforce-no-major:
+  enforce-no-breaking-changes:
     permissions:
       issues: write
       pull-requests: write
-    uses: localstack/meta/.github/workflows/pr-enforce-no-major.yml@main
+    uses: localstack/meta/.github/workflows/pr-enforce-no-breaking-changes.yml@main
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
 
-## pr-enforce-no-major-minor
+## pr-enforce-patch-only
 ```yaml
 name: Enforce no major or minor on main
 
@@ -110,41 +110,12 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    uses: localstack/meta/.github/workflows/pr-enforce-no-major-minor.yml@main
+    uses: localstack/meta/.github/workflows/pr-enforce-patch-only.yml@main
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
 
-## pr-enforce-semver-labels
-```yaml
-name: Enforce SemVer Labels
-on:
-  pull_request_target:
-    types: [labeled, unlabeled, opened]
-
-jobs:
-  enforce-semver-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-semver-labels.yml@main
-    secrets:
-      github-token: ${{ secrets.REPO_ACCESS_PAT }}
-```
-
-## pr-enforce-docs-labels
-```yaml
-name: Enforce Docs Labels
-
-on:
-  pull_request_target:
-    types: [labeled, unlabeled, opened]
-
-jobs:
-  enforce-docs-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-docs-labels.yml@main
-    secrets:
-      github-token: ${{ secrets.REPO_ACCESS_PAT }}
-```
-
-## pr-enforce-labels
+## pr-enforce-label-groups
 ```yaml
 name: Enforce Labels
 
@@ -154,7 +125,7 @@ on:
 
 jobs:
   labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-core-labels.yml@main
+    uses: localstack/meta/.github/workflows/pr-enforce-label-groups.yml@main
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
 ```
