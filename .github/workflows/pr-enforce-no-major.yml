@@ -1,4 +1,4 @@
-name: Enforce no major labels
+name: Enforce no Breaking Changes
 
 on:
   workflow_call:
@@ -8,8 +8,7 @@ on:
         description: A GitHub token with access to the issues of the calling repo
 
 jobs:
-  # make sure no PRs with major label are merged
-  enforce-no-major-label:
+  enforce-no-breaking-changes:
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -19,7 +18,7 @@ jobs:
         with:
           mode: exactly
           count: 0
-          labels: "semver: major"
+          labels: "calver: breaking, semver: major"
           add_comment: true
           token: ${{ secrets.github-token }}
-          message: "Currently, only minor and patch changes are allowed on main. Your PR labels ({{ applied }}) indicate that it cannot be merged into the main at this time."
+          message: "Currently, no breaking changes are allowed on main. Your PR labels ({{ applied }}) indicate that it cannot be merged into the main at this time."
