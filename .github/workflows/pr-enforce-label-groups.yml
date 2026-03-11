@@ -1,4 +1,5 @@
-name: Enforce PR labels
+# Ensures all the relevant groups of labels are applied to a PR.
+name: Enforce All PR Labels
 
 on:
   workflow_call:
@@ -8,32 +9,32 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  semver:
+  calver-labels:
+    name: CalVer
     runs-on: ubuntu-latest
     steps:
-      - uses: mheap/github-action-required-labels@v5
+      - uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
         with:
-          mode: exactly
-          count: 1
-          labels: "semver: patch, semver: minor, semver: major"
-          token: ${{ secrets.github-token }}
+          labels: "calver: patch, calver: monthly, calver: breaking"
+        secrets:
+          github-token: ${{ secrets.github-token }}
 
-  docs:
+  docs-labels:
+    name: Documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: mheap/github-action-required-labels@v5
+      - uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
         with:
-          mode: exactly
-          count: 1
           labels: "docs: needed, docs: skip"
-          token: ${{ secrets.github-token }}
+        secrets:
+          github-token: ${{ secrets.github-token }}
 
-  notes:
+  notes-labels:
+    name: Notes
     runs-on: ubuntu-latest
     steps:
-      - uses: mheap/github-action-required-labels@v5
+      - uses: localstack/meta/.github/workflows/pr-enforce-pr-labels.yml@main
         with:
-          mode: exactly
-          count: 1
           labels: "notes: needed, notes: skip"
-          token: ${{ secrets.github-token }}
+        secrets:
+          github-token: ${{ secrets.github-token }}
