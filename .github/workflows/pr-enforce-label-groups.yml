@@ -10,12 +10,12 @@ on:
 
 jobs:
   calver-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-calver-labels@main
+    uses: localstack/meta/.github/workflows/pr-enforce-calver-labels.yml@main
     secrets:
       github-token: ${{ secrets.github-token }}
 
   docs-labels:
-    uses: localstack/meta/.github/workflows/pr-enforce-docs-labels@main
+    uses: localstack/meta/.github/workflows/pr-enforce-docs-labels.yml@main
     secrets:
       github-token: ${{ secrets.github-token }}
 
