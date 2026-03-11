@@ -19,7 +19,7 @@ jobs:
         with:
           mode: exactly
           count: 0
-          labels: "calver: monthly, calver: breaking"
+          labels: "calver: monthly, calver: breaking, semver: minor, semver: major"
           add_comment: true
           token: ${{ secrets.github-token }}
           message: "Currently, only patch changes are allowed on main. Your PR labels ({{ applied }}) indicate that it cannot be merged into the main at this time."
