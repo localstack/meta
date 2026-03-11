@@ -6,8 +6,8 @@ on:
     types: [labeled, unlabeled, opened, synchronize]
 
 jobs:
-  name: Label Check
   labels:
+    name: Label Check
     uses: localstack/meta/.github/workflows/pr-enforce-label-groups.yml@aidehn/feat/calendar-versioning-migrations-and-cleanup
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
