@@ -6,14 +6,13 @@ on:
       labels:
         required: true
         type: string
-        description: "comma separated list of labels where exactly one has to be set on PRs"
+        description: "A comma separated list of labels where exactly one has to be set on PRs."
     secrets:
       github-token:
         required: true
-        description: A GitHub token with access to the issues of the calling repo
+        description: "A GitHub token with access to the issues of the calling repo."
 
 jobs:
-  # make sure _all_ PRs have a semver label
   enforce-pr-labels:
     runs-on: ubuntu-latest
     steps:
