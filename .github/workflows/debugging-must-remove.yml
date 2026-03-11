@@ -1,0 +1,10 @@
+name: debug enforce labels
+on:
+  pull_request_target:
+    types: [labeled, unlabeled, opened, synchronize]
+
+jobs:
+  labels:
+    uses: localstack/meta/.github/workflows/pr-enforce-label-groups.yml@main
+    secrets:
+      github-token: ${{ secrets.PRO_ACCESS_TOKEN }}
