@@ -1,0 +1,45 @@
+name: Create Docs Linear Issue
+
+on:
+  workflow_call:
+    secrets:
+      linear-api-key:
+        required: true
+        description: An API key to use to create the DOCS issue.
+      linear-label-id:
+        required: true
+        description: The ID of the label to be added to the issue.
+      linear-docs-team-id:
+        required: true
+        description: The ID of the DOCS team in Linear.
+       
+jobs:
+  create-issue:
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'docs: needed')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Linear Issue
+        env:
+          LINEAR_API_KEY: ${{ secrets.linear-api-key }}
+          LINEAR_LABEL_ID: ${{ secrets.linear-label-id }}
+          LINEAR_DOCS_TEAM_ID: ${{ secrets.linear-docs-team-id }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg t "DOC: $PR_TITLE" \
+            --arg d "PR: $PR_URL\n\n$PR_BODY" \
+            --arg id "$LINEAR_DOCS_TEAM_ID" \
+            --arg l "$LINEAR_LABEL_ID" \
+            '{
+              query: "mutation($t:String!,$d:String!,$id:String!,$l:[String!]){issueCreate(input:{title:$t,description:$d,teamId:$id,labelIds:$l}){success issue{identifier url}}}",
+              variables: { t: $t, d: $d, id: $id, l: [$l] }
+            }')
+          RESPONSE=$(curl -s -X POST https://api.linear.app/graphql \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $LINEAR_API_KEY" \
+            -d "$PAYLOAD")
+          echo "$RESPONSE" | jq .
