@@ -1,4 +1,5 @@
-name: Enforce PR labels
+# Ensures all the relevant groups of labels are applied to a PR.
+name: Enforce All PR Labels
 
 on:
   workflow_call:
@@ -8,16 +9,15 @@ on:
         description: A GitHub personal access token with write access to the project
 
 jobs:
-  semver:
+  calver:
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@v5
         with:
           mode: exactly
           count: 1
-          labels: "semver: patch, semver: minor, semver: major"
+          labels: "calver: patch, calver: monthly, calver: breaking"
           token: ${{ secrets.github-token }}
-
   docs:
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +27,6 @@ jobs:
           count: 1
           labels: "docs: needed, docs: skip"
           token: ${{ secrets.github-token }}
-
   notes:
     runs-on: ubuntu-latest
     steps:
