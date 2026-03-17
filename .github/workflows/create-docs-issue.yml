@@ -25,9 +25,7 @@ on:
        
 jobs:
   create-issue:
-    if: >
-      ${{ github.event.pull_request.merged }} == true &&
-      contains(github.event.pull_request.labels.*.name, ${{ inputs.label }})
+    if: ${{ github.event.pull_request.merged }} == true && contains(github.event.pull_request.labels.*.name, ${{ inputs.label }})
     runs-on: ubuntu-latest
     steps:
       - name: Create Linear Issue
