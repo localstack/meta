@@ -10,6 +10,7 @@ on:
       issue-prefix:
         required: false
         description: A prefix to add to the issue title.
+        type: string
         default: "AUTO-GENERATED"
     secrets:
       linear-api-key:
