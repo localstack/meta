@@ -27,12 +27,11 @@ jobs:
           LINEAR_DOCS_TEAM_ID: ${{ secrets.linear-docs-team-id }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_URL: ${{ github.event.pull_request.html_url }}
-          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           desc=
           PAYLOAD=$(jq -n \
             --arg t "DOC: $PR_TITLE" \
-            --arg d $'PR: $PR_URL\n\n$PR_BODY' \
+            --arg d "PR: $PR_URL" \
             --arg id "$LINEAR_DOCS_TEAM_ID" \
             --arg l "$LINEAR_LABEL_ID" \
             '{
