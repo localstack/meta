@@ -32,7 +32,7 @@ jobs:
           desc=
           PAYLOAD=$(jq -n \
             --arg t "DOC: $PR_TITLE" \
-            --arg d $'"PR: $PR_URL\n\n$PR_BODY"' \
+            --arg d $'PR: $PR_URL\n\n$PR_BODY' \
             --arg id "$LINEAR_DOCS_TEAM_ID" \
             --arg l "$LINEAR_LABEL_ID" \
             '{
