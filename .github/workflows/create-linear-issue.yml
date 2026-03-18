@@ -36,10 +36,11 @@ jobs:
           ISSUE_PREFIX: ${{ inputs.issue-prefix }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           PAYLOAD=$(jq -n \
             --arg t "$ISSUE_PREFIX: $PR_TITLE" \
-            --arg d "PR: $PR_URL" \
+            --arg d "PR: $PR_URL - $PR_BODY" \
             --arg id "$ISSUE_TEAM_ID" \
             --arg l "$ISSUE_LABEL_ID" \
             '{
