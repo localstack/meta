@@ -47,7 +47,7 @@ jobs:
               query: "mutation($t:String!,$d:String!,$id:String!,$l:[String!]){issueCreate(input:{title:$t,description:$d,teamId:$id,labelIds:$l}){success issue{identifier url}}}",
               variables: { t: $t, d: $d, id: $id, l: [$l] }
             }')
-          RESPONSE=$(curl -s -X POST https://api.linear.app/graphql \
+          RESPONSE=$(curl --retry 3 -s -X POST https://api.linear.app/graphql \
             -H "Content-Type: application/json" \
             -H "Authorization: $LINEAR_API_KEY" \
             -d "$PAYLOAD")
