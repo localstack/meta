@@ -1,0 +1,54 @@
+name: Create Linear Issue on PR Merge
+
+on:
+  workflow_call:
+    inputs:
+      label:
+        required: true
+        description: The PR label which should trigger an issue being created.
+        type: string
+      issue-prefix:
+        required: false
+        description: A prefix to add to the issue title.
+        type: string
+        default: "AUTO-GENERATED"
+    secrets:
+      linear-api-key:
+        required: true
+        description: An API key to use to create an issue.
+      issue-label-id:
+        required: true
+        description: The ID of a pre-existing label to add to the created issue.
+      issue-team-id:
+        required: true
+        description: The ID of the team to create the issue under within Linear.
+       
+jobs:
+  create-issue:
+    if: ${{ github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, inputs.label) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Linear Issue
+        env:
+          LINEAR_API_KEY: ${{ secrets.linear-api-key }}
+          ISSUE_LABEL_ID: ${{ secrets.issue-label-id }}
+          ISSUE_TEAM_ID: ${{ secrets.issue-team-id }}
+          ISSUE_PREFIX: ${{ inputs.issue-prefix }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg t "$ISSUE_PREFIX: $PR_TITLE" \
+            --arg d "PR: $PR_URL - $PR_BODY" \
+            --arg id "$ISSUE_TEAM_ID" \
+            --arg l "$ISSUE_LABEL_ID" \
+            '{
+              query: "mutation($t:String!,$d:String!,$id:String!,$l:[String!]){issueCreate(input:{title:$t,description:$d,teamId:$id,labelIds:$l}){success issue{identifier url}}}",
+              variables: { t: $t, d: $d, id: $id, l: [$l] }
+            }')
+          RESPONSE=$(curl --retry 3 -s -X POST https://api.linear.app/graphql \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $LINEAR_API_KEY" \
+            -d "$PAYLOAD")
+          echo "$RESPONSE" | jq .
