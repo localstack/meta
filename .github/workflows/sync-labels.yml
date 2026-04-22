@@ -37,7 +37,7 @@ jobs:
     - name: Show downloaded label manifest
       run: cat labels-${{ matrix.category }}.yml
     - name: Sync Labels
-      uses: micnncim/action-label-syncer@v1
+      uses: micnncim/action-label-syncer@3abd5ab72fda571e69fffd97bd4e0033dd5f495c # v1
       env:
         GITHUB_TOKEN: ${{ secrets.github-token }}
       with:

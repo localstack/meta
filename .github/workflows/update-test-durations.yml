@@ -34,7 +34,7 @@ jobs:
     name: "Download, merge and publish test durations"
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v6
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
           with:
             path: ${{ inputs.repository-name }}
 
@@ -64,7 +64,7 @@ jobs:
             echo "TEST_DURATIONS_ARTIFACTS_PREFIX=${test_durations_artifacts_prefix}" >> $GITHUB_ENV
 
         - name: Load test durations
-          uses: actions/download-artifact@v8
+          uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
           with:
             pattern: ${{ env.TEST_DURATIONS_ARTIFACTS_PREFIX }}-${{ env.PLATFORM }}-*
             path: artifacts-test-durations
@@ -78,7 +78,7 @@ jobs:
             jq -s 'add | to_entries | sort_by(.key) | from_entries' artifacts-test-durations/.test_durations-${{ env.PLATFORM }}*  > ${{ inputs.test-durations-file-path }} || echo "::warning::Test durations were not merged"
 
         - name: Upload artifact with merged test durations
-          uses: actions/upload-artifact@v7
+          uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
           if: ${{ success() && inputs.publish-method == 'UPLOAD_ARTIFACT' }}
           with:
             name: merged-test-durations
@@ -87,7 +87,7 @@ jobs:
             if-no-files-found: error
 
         - name: Create PR
-          uses: peter-evans/create-pull-request@v8
+          uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
           if: ${{ success() && inputs.publish-method == 'CREATE_PR' }}
           with:
             title: "Update test durations"
