@@ -85,3 +85,14 @@ jobs:
     uses: localstack/meta/.github/workflows/pr-enforce-label-groups.yml@main
     secrets:
       github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
+
+- By default, all label groups (`docs`, `notes`) are enforced.
+- Individual groups can be disabled via inputs, f.e. to only enforce the `docs` labels:
+```yaml
+    uses: localstack/meta/.github/workflows/pr-enforce-label-groups.yml@main
+    with:
+      notes: false
+    secrets:
+      github-token: ${{ secrets.REPO_ACCESS_PAT }}
+```
