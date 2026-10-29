@@ -3,6 +3,17 @@ name: Enforce All PR Labels
 
 on:
   workflow_call:
+    inputs:
+      docs:
+        required: false
+        description: Whether to enforce the `docs` label group.
+        type: boolean
+        default: true
+      notes:
+        required: false
+        description: Whether to enforce the `notes` label group.
+        type: boolean
+        default: true
     secrets:
       github-token:
         required: true
@@ -10,6 +21,7 @@ on:
 
 jobs:
   docs:
+    if: ${{ inputs.docs }}
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@23e10fde7e062233401931a0eece796cd9bf3177 # v5
@@ -19,6 +31,7 @@ jobs:
           labels: "docs: needed, docs: skip"
           token: ${{ secrets.github-token }}
   notes:
+    if: ${{ inputs.notes }}
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@23e10fde7e062233401931a0eece796cd9bf3177 # v5
